@@ -21,7 +21,7 @@ FROM build AS dev
 ENV ENV_FOR_DYNACONF=dev
 
 WORKDIR /app
-COPY ./src /app
+COPY ./src .
 
 ############
 # Optional #
@@ -38,7 +38,7 @@ FROM build AS prod
 ENV ENV_FOR_DYNACONF=prod
 
 WORKDIR /app
-COPY ./src/* .
+COPY ./src .
 
 ############
 # Optional #
