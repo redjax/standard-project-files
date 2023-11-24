@@ -7,31 +7,34 @@
 # Format/Lint #
 ###############
 
+# Lint with black & ruff
+lint = { shell = "pdm run ruff check . --fix && pdm run black . }
+
 # Check only, don't fix
-check = {cmd = "black ."}
+check = { cmd = "black ." }
 # Check and fix
-format = {cmd = "ruff check . --fix"}
+format = { cmd = "ruff check . --fix" }
 
 ########################
 # Start/Launch Scripts #
 ########################
 
 #  Run main app or script. Launches from app/
-start = { shell = "cd app && pdm run python main.py"}
+start = { shell = "cd app && pdm run python main.py" }
 
 ###########
 # Alembic #
 ###########
 
 ## Create initial commit
-alembic-init = {cmd = "alembic revision -m 'Initial commit.'"}
+alembic-init = { cmd = "alembic revision -m 'Initial commit.'" }
 
 ## Upgrade Alembic head after making model changes
-alembic-upgrade = {cmd = "alembic upgrade head" }
+alembic-upgrade = { cmd = "alembic upgrade head" }
 
 ## Run migrations
 #  Prompts for a commit message
-alembic-migrate = {shell = "read -p 'Commit message: ' commit_msg && pdm run alembic revision --autogenerate -m '${commit_msg}'" }
+alembic-migrate = { shell = "read -p 'Commit message: ' commit_msg && pdm run alembic revision --autogenerate -m '${commit_msg}'" }
 
 ## Run full migration, upgrade - commit - revision
 migrations = { shell = "pdm run alembic upgrade head && read -p 'Commit message: ' commit_msg && pdm run alembic revision --autogenerate -m '${commit_msg}'" }
@@ -41,8 +44,8 @@ migrations = { shell = "pdm run alembic upgrade head && read -p 'Commit message:
 ######################
 
 #  Export production requirements
-export = {cmd = "pdm export --prod -o requirements.txt --without-hashes"}
+export = { cmd = "pdm export --prod -o requirements.txt --without-hashes" }
 #  Export only development requirements
-export-dev = {cmd = "pdm export -d -o requirements.dev.txt --without-hashes"}
+export-dev = { cmd = "pdm export -d -o requirements.dev.txt --without-hashes" }
 ## Uncomment if/when using a CI group
-# export-ci = {cmd = "pdm export -G ci -o requirements.ci.txt --without-hashes"}
+# export-ci = { cmd = "pdm export -G ci -o requirements.ci.txt --without-hashes" }
