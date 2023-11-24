@@ -8,8 +8,7 @@
 ###############
 
 # Lint with black & ruff
-lint = { shell = "pdm run ruff check . --fix && pdm run black . }
-
+lint = { shell = "pdm run ruff check . --fix && pdm run black ." }
 # Check only, don't fix
 check = { cmd = "black ." }
 # Check and fix
