@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import nox
 
 @nox.session(python=["3.11"], name="setup-env", reuse_venv=True)
@@ -46,4 +48,3 @@ def export_requirements(session: nox.Session):
     session.install("pdm")
     session.run("pdm", "export", "--prod", "-o", "requirements.txt", "--without-hashes")
     session.run("pdm", "export", "-d", "-o", "requirements.dev.txt", "--without-hashes")
-
