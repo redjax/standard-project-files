@@ -29,9 +29,9 @@ nox.options.error_on_external_run = False
 nox.options.error_on_missing_interpreters = False
 
 if pkgutil.find_loader("pdm"):
-    PDM_EXTERNAL: bool = False
-else:
     PDM_EXTERNAL: bool = True
+else:
+    PDM_EXTERNAL: bool = False
 
 print(f"Detected PDM in environment: {PDM_EXTERNAL}")
 
