@@ -1,5 +1,6 @@
-from pytest import mark, xfail
+from __future__ import annotations
 
+from pytest import mark, xfail
 
 @mark.hello
 def test_say_hello(dummy_hello_str: str):
@@ -7,8 +8,10 @@ def test_say_hello(dummy_hello_str: str):
         dummy_hello_str, str
     ), f"Invalid test output type: ({type(dummy_hello_str)}). Should be of type str"
     assert (
-        dummy_hello_str == "hello, world"
-    ), f"String should have been 'hello, world', not '{dummy_hello_str}'"
+        dummy_hello_str == "world"
+    ), f"String should have been 'world', not '{dummy_hello_str}'"
+
+    print(f"Hello, {dummy_hello_str}!")
 
 
 @mark.always_pass
