@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from pathlib import Path
-import pkgutil
 
 import nox
 
@@ -28,13 +27,6 @@ if not REQUIREMENTS_OUTPUT_DIR.exists():
 nox.options.error_on_external_run = False
 nox.options.error_on_missing_interpreters = False
 
-if pkgutil.find_loader("pdm"):
-    PDM_EXTERNAL: bool = True
-else:
-    PDM_EXTERNAL: bool = False
-
-print(f"Detected PDM in environment: {PDM_EXTERNAL}")
-
 
 @nox.session(python=TEST_PYVERS, name="testenv", reuse_venv=True)
 @nox.parametrize("pdm_ver", [PDM_VER])
@@ -42,6 +34,7 @@ def setup_base_testenv(session: nox.Session, pdm_ver: str):
     session.install(f"pdm>={pdm_ver}")
 
     print("Installing development dependencies with PDM")
+    session.run("pdm", "sync", external=True)
     session.run("pdm", "install", "-d", external=True)
 
 
@@ -51,7 +44,14 @@ def run_linter(session: nox.Session):
         lint_path: Path = Path(d)
         print(f"Running ruff imports sort on '{d}'")
         session.run(
-            "pdm", "run", "ruff", "--select", "I", "--fix", lint_path, external=True
+            "pdm",
+            "run",
+            "ruff",
+            "--select",
+            "I",
+            "--fix",
+            lint_path,
+            external=True,
         )
 
         print(f"Formatting '{d}' with Black")
@@ -82,6 +82,7 @@ def export_requirements(session: nox.Session):
         "--without-hashes",
         external=True,
     )
+
     print("Exporting development requirements")
     session.run(
         "pdm",
@@ -92,17 +93,18 @@ def export_requirements(session: nox.Session):
         "--without-hashes",
         external=True,
     )
-    print("Exporting CI requirements")
-    session.run(
-        "pdm",
-        "export",
-        "--group",
-        "ci",
-        "-o",
-        f"{REQUIREMENTS_OUTPUT_DIR}/requirements.ci.txt",
-        "--without-hashes",
-        external=True,
-    )
+
+    # print("Exporting CI requirements")
+    # session.run(
+    #     "pdm",
+    #     "export",
+    #     "--group",
+    #     "ci",
+    #     "-o",
+    #     f"{REQUIREMENTS_OUTPUT_DIR}/requirements.ci.txt",
+    #     "--without-hashes",
+    #     external=True,
+    # )
 
 
 @nox.session(python=TEST_PYVERS, name="tests", reuse_venv=True)
