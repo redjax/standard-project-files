@@ -194,3 +194,6 @@ cython_debug/
 #  commit notebook with output.
 
 # *.ipynb
+
+## Ignore mkdocs builds
+site/
