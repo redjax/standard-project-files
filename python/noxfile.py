@@ -12,18 +12,19 @@ nox.options.error_on_missing_interpreters = False
 # nox.options.report = True
 nox.sessions = ["lint", "export", "tests"]
 
+## Get tuple of Python ver ('maj', 'min', 'mic')
 PY_VER_TUPLE = platform.python_version_tuple()
-# DEFAULT_PYTHON: str = "3.11"
+## Dynamically set Python version
 DEFAULT_PYTHON: str = f"{PY_VER_TUPLE[0]}.{PY_VER_TUPLE[1]}"
-
+## Define versions to test
 PY_VERSIONS: list[str] = ["3.12", "3.11"]
-
+## Set PDM version to install throughout
 PDM_VER: str = "2.11"
-
-LINT_PATHS: list[str] = ["red_utils", "tests", "./noxfile.py"]
-
+## Set paths to lint with the lint session
+LINT_PATHS: list[str] = ["src", "tests", "./noxfile.py"]
+## Set directory for requirements.txt file output
 REQUIREMENTS_OUTPUT_DIR: Path = Path("./requirements")
-
+## Ensure REQUIREMENTS_OUTPUT_DIR path exists
 if not REQUIREMENTS_OUTPUT_DIR.exists():
     try:
         REQUIREMENTS_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -39,6 +40,7 @@ if not REQUIREMENTS_OUTPUT_DIR.exists():
 @nox.session(python=PY_VERSIONS, name="build-env")
 @nox.parametrize("pdm_ver", [PDM_VER])
 def setup_base_testenv(session: nox.Session, pdm_ver: str):
+    print(f"Default Python: {DEFAULT_PYTHON}")
     session.install(f"pdm>={pdm_ver}")
 
     print("Installing dependencies with PDM")
@@ -51,30 +53,34 @@ def run_linter(session: nox.Session):
     session.install("ruff", "black")
 
     for d in LINT_PATHS:
-        lint_path: Path = Path(d)
-        print(f"Running ruff imports sort on '{d}'")
-        session.run(
-            "ruff",
-            "--select",
-            "I",
-            "--fix",
-            lint_path,
-        )
+        if not Path(d).exists():
+            print(f"Skipping lint path '{d}', could not find path")
+            pass
+        else:
+            lint_path: Path = Path(d)
+            print(f"Running ruff imports sort on '{d}'")
+            session.run(
+                "ruff",
+                "--select",
+                "I",
+                "--fix",
+                lint_path,
+            )
 
-        print(f"Formatting '{d}' with Black")
-        session.run(
-            "black",
-            lint_path,
-        )
+            print(f"Formatting '{d}' with Black")
+            session.run(
+                "black",
+                lint_path,
+            )
 
-        print(f"Running ruff checks on '{d}' with --fix")
-        session.run(
-            "ruff",
-            "--config",
-            "ruff.ci.toml",
-            lint_path,
-            "--fix",
-        )
+            print(f"Running ruff checks on '{d}' with --fix")
+            session.run(
+                "ruff",
+                "--config",
+                "ruff.ci.toml",
+                lint_path,
+                "--fix",
+            )
 
 
 @nox.session(python=[DEFAULT_PYTHON], name="export")
@@ -117,8 +123,6 @@ def export_requirements(session: nox.Session, pdm_ver: str):
 @nox.session(python=PY_VERSIONS, name="tests")
 @nox.parametrize("pdm_ver", [PDM_VER])
 def run_tests(session: nox.Session, pdm_ver: str):
-    print(f"Default Python: {DEFAULT_PYTHON}")
-
     session.install(f"pdm>={pdm_ver}")
     session.run("pdm", "install")
 
