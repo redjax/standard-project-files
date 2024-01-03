@@ -28,6 +28,8 @@ ignore = [
     "D106", ## missing-docstring-in-public-nested-class
     "D203", ## one-blank-line-before-class
     "D213", ## multi-line-summary-second-line
+    "D406", ## Section name should end with a newline
+    "D407", ## Missing dashed underline after section
     "E501", ## Line too long
     "E402", ## Module level import not at top of file
 ]
