@@ -32,6 +32,7 @@ ignore = [
     "D407", ## Missing dashed underline after section
     "E501", ## Line too long
     "E402", ## Module level import not at top of file
+    "F401", ## imported but unused
 ]
 
 ## Allow autofix for all enabled rules (when "--fix") is provided.
