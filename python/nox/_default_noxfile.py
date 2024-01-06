@@ -10,6 +10,8 @@ nox.options.reuse_existing_virtualenvs = True
 nox.options.error_on_external_run = False
 nox.options.error_on_missing_interpreters = False
 # nox.options.report = True
+
+## Define sessions to run when no session is specified
 nox.sessions = ["lint", "export", "tests"]
 
 ## Get tuple of Python ver ('maj', 'min', 'mic')
@@ -137,3 +139,28 @@ def run_tests(session: nox.Session, pdm_ver: str):
         "-v",
         "-rsXxfP",
     )
+
+
+@nox.session(python=PY_VERSIONS, name="pre-commit-all")
+def run_pre_commit_all(session: nox.Session):
+    session.install("pre-commit")
+    session.run("pre-commit")
+
+    print("Running all pre-commit hooks")
+    session.run("pre-commit", "run")
+
+
+@nox.session(python=PY_VERSIONS, name="pre-commit-update")
+def run_pre_commit_autoupdate(session: nox.Session):
+    session.install(f"pre-commit")
+
+    print("Running pre-commit update hook")
+    session.run("pre-commit", "run", "pre-commit-update")
+
+
+@nox.session(python=PY_VERSIONS, name="pre-commit-nbstripout")
+def run_pre_commit_nbstripout(session: nox.Session):
+    session.install(f"pre-commit")
+
+    print("Running nbstripout pre-commit hook")
+    session.run("pre-commit", "run", "nbstripout")
