@@ -1,0 +1,5 @@
+- repo: https://gitlab.com/vojko.pribudic/pre-commit-update
+  rev: v0.1.1
+  hooks:
+    - id: pre-commit-update
+      args: [--dry-run --exclude black --keep isort]
