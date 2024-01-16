@@ -42,8 +42,10 @@ fixable = [
     # "A",  ## flake8-builtins
     # "B",  ## flake8-bugbear
     "C",
-    "D", ## pydocstyle
-    "E", ## pycodestyle-error
+    "D",    ## pydocstyle
+    "E",    ## pycodestyle-error
+    "E402", ## Module level import not at top of file
+    "E501", ## Line too long
     # "F",  ## pyflakes
     "F401", ## unused imports
     # "G",  ## flake8-logging-format

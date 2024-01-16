@@ -47,6 +47,7 @@ ignore = [
     "E402", ## Module level import not at top of file
     "D406", ## Section name should end with a newline
     "D407", ## Missing dashed underline after section
+    "D414", ## Section has no content
     "D417", ## Missing argument descriptions in the docstring for [variables]
     "E501", ## Line too long
     "E722", ## Do note use bare `except`
@@ -60,8 +61,9 @@ fixable = [
     # "A",  ## flake8-builtins
     # "B",  ## flake8-bugbear
     "C",
-    "D", ## pydocstyle
-    "E", ## pycodestyle-error
+    "D",    ## pydocstyle
+    "E",    ## pycodestyle-error
+    "E402", ## Module level import not at top of file
     # "F",  ## pyflakes
     "F401", ## unused imports
     # "G",  ## flake8-logging-format
@@ -149,4 +151,3 @@ section-order = [
     "local-folder",
     "third-party",
 ]
-
