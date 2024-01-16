@@ -21,7 +21,7 @@ DEFAULT_PYTHON: str = f"{PY_VER_TUPLE[0]}.{PY_VER_TUPLE[1]}"
 ## Define versions to test
 PY_VERSIONS: list[str] = ["3.12", "3.11"]
 ## Set PDM version to install throughout
-PDM_VER: str = "2.11"
+PDM_VER: str = "2.11.2"
 ## Set paths to lint with the lint session
 LINT_PATHS: list[str] = ["src", "tests", "./noxfile.py"]
 ## Set directory for requirements.txt file output
