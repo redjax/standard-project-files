@@ -11,9 +11,45 @@ env = "prod"
 container_env = false
 log_level = "INFO"
 
+############
+# Database #
+############
+
+# db_drivername = "sqlite+pysqlite"
+# db_username = ""
+## Set in .secrets.toml
+# db_password = ""
+# db_host = ""
+# db_port = ""
+# db_database = ".data/app.sqlite"
+
 [dev]
 
 env = "dev"
 log_level = "DEBUG"
 
+############
+# Database #
+############
+
+# db_drivername = "sqlite+pysqlite"
+# db_username = ""
+## Set in .secrets.toml
+# db_password = ""
+# db_host = ""
+# db_port = ""
+# db_database = ".data/app-dev.sqlite"
+
 [prod]
+
+############
+# Database #
+############
+
+# db_drivername = "sqlite+pysqlite"
+# db_username = ""
+## Set in .secrets.toml
+# db_password = ""
+# db_host = ""
+# db_port = ""
+# db_database = ".data/app.sqlite"
