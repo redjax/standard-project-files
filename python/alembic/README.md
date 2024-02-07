@@ -68,3 +68,65 @@ from app.module.database import Base  # Import project's SQLAlchemy Base object
 
 target_metadata = Base().metadata  # Tell Alembic to use the project's Base() object
 ```
+
+## Performing Alembic migrations
+
+- Perform first/initial migration:
+  - `alembic revision --autogenerate -m "initial migration"`
+    - If no changes have been made, `alembic revision` will create an empty revision, with no changes.
+- Upgrade:
+  - If you are doing multiple migrations at once, you can do:
+    - `alembic upgrade +1`
+      - (`+1` is how many migration levels to apply at once. If you have multiple migrations that have not been committed, you can use `+2`, `+3`, etc)
+  - To push the current revision:
+    - `alembic upgrade head`
+      - This will push all current migrations, up to the current migration, to the database
+- To Downgrade/revert a migration:
+    - `alembic downgrade -1`
+      - (`-1` is how many migration levels to revert, can also be `-2`, `-3`, etc)
+
+## Manually specify migration changes when Alembic does not correctly detect them
+
+Some changes, like renaming a column, are not possible for Alembic to accurately track. In these cases, you will need to create an Alembic migration, then edit the new file in `alembic/versions/{revision-hash}.py`.
+
+In the `def upgrade()` section, comment the innacurate `op.add_column()`/`op.drop_column()`, then add something like this (example uses the `User` class, with a renamed column `.username` -> `.user_name`):
+
+```
+# alembic/versions/{revision-hash}.py
+
+...
+
+def upgrade() -> None:
+    ...
+
+    ## Comment the inaccurate changes
+    #  op.add_column("users", sa.Column("user_name", sa.VARCHAR(length=255), nullable=True))
+    #  op.drop_column("users", "username)
+
+    ## Manually add a change of column type that wasn't detected by alembic
+    op.alter_column("products", "description", type_=sa.VARCHAR(length=3000))
+
+    ## Manually describe column rename
+    op.alter_column("users", "username", new_column_name="user_name")
+```
+
+Also edit the `def downgrade()` function to describe the changes that should be reverted when using `alembic downgrade`:
+
+```
+# alembic/versions/{revision-hash}.py
+
+...
+
+def downgrade() -> None:
+    ## Comment the inaccurate changes
+    #  op.add_column("users", sa.Column("user_name", sa.VARCHAR(length=255), nullable=True))
+    #  op.drop_column("users", "username)
+
+    ## Manually describe changes to reverse if downgrading
+    op.alter_column("users", "user_name", new_column_name="username")
+    op.drop_column("products", "price")
+
+    
+```
+
+After describing manual changes in an Alembic version file, you need to run `alembic upgrade head` to push the changes from the revision to the database.
