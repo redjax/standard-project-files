@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 import platform
+import shutil
 
 import nox
 
@@ -14,6 +15,10 @@ nox.options.error_on_missing_interpreters = False
 ## Define sessions to run when no session is specified
 nox.sessions = ["lint", "export", "tests"]
 
+# INIT_COPY_FILES: list[dict[str, str]] = [
+#     {"src": "config/.secrets.example.toml", "dest": "config/.secrets.toml"},
+#     {"src": "config/settings.toml", "dest": "config/settings.local.toml"},
+# ]
 ## Get tuple of Python ver ('maj', 'min', 'mic')
 PY_VER_TUPLE = platform.python_version_tuple()
 ## Dynamically set Python version
@@ -164,3 +169,25 @@ def run_pre_commit_nbstripout(session: nox.Session):
 
     print("Running nbstripout pre-commit hook")
     session.run("pre-commit", "run", "nbstripout")
+
+
+# @nox.session(python=[PY_VER_TUPLE], name="init-setup")
+# def run_initial_setup(session: nox.Session):
+#     if INIT_COPY_FILES is None:
+#         print(f"INIT_COPY_FILES is empty. Skipping")
+#         pass
+
+#     else:
+
+#         for pair_dict in INIT_COPY_FILES:
+#             src = Path(pair_dict["src"])
+#             dest = Path(pair_dict["dest"])
+#             if not dest.exists():
+#                 print(f"Copying {src} to {dest}")
+#                 try:
+#                     shutil.copy(src, dest)
+#                 except Exception as exc:
+#                     msg = Exception(
+#                         f"Unhandled exception copying file from '{src}' to '{dest}'. Details: {exc}"
+#                     )
+#                     print(f"[ERROR] {msg}")
