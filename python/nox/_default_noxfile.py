@@ -19,16 +19,18 @@ nox.sessions = ["lint", "export", "tests"]
 #     {"src": "config/.secrets.example.toml", "dest": "config/.secrets.toml"},
 #     {"src": "config/settings.toml", "dest": "config/settings.local.toml"},
 # ]
-## Get tuple of Python ver ('maj', 'min', 'mic')
-PY_VER_TUPLE = platform.python_version_tuple()
-## Dynamically set Python version
-DEFAULT_PYTHON: str = f"{PY_VER_TUPLE[0]}.{PY_VER_TUPLE[1]}"
 ## Define versions to test
 PY_VERSIONS: list[str] = ["3.12", "3.11"]
 ## Set PDM version to install throughout
 PDM_VER: str = "2.11.2"
 ## Set paths to lint with the lint session
 LINT_PATHS: list[str] = ["src", "tests", "./noxfile.py"]
+
+## Get tuple of Python ver ('maj', 'min', 'mic')
+PY_VER_TUPLE = platform.python_version_tuple()
+## Dynamically set Python version
+DEFAULT_PYTHON: str = f"{PY_VER_TUPLE[0]}.{PY_VER_TUPLE[1]}"
+
 ## Set directory for requirements.txt file output
 REQUIREMENTS_OUTPUT_DIR: Path = Path("./requirements")
 ## Ensure REQUIREMENTS_OUTPUT_DIR path exists
