@@ -6,6 +6,10 @@ from dynaconf import Dynaconf
 from pydantic import Field, ValidationError, field_validator
 from pydantic_settings import BaseSettings
 
+## Uncomment if adding a database config
+# import sqlalchemy as sa
+# import sqlalchemy.orm as so
+
 DYNACONF_SETTINGS: Dynaconf = Dynaconf(
     environments=True,
     envvar_prefix="DYNACONF",
@@ -58,6 +62,56 @@ class AppSettings(BaseSettings):
 #             return int(v)
 #         else:
 #             raise ValidationError
+
+#     def get_db_uri(self) -> sa.URL:
+#         try:
+#             _uri: sa.URL = sa.URL.create(
+#                 drivername=self.drivername,
+#                 username=self.user,
+#                 password=self.password,
+#                 host=self.host,
+#                 port=self.port,
+#                 database=self.database,
+#             )
+
+#             return _uri
+
+#         except Exception as exc:
+#             msg = Exception(
+#                 f"Unhandled exception getting SQLAlchemy database URL. Details: {exc}"
+#             )
+#             raise msg
+
+#     def get_engine(self) -> sa.Engine:
+#         assert self.get_db_uri() is not None, ValueError("db_uri is not None")
+#         assert isinstance(self.get_db_uri(), sa.URL), TypeError(
+#             f"db_uri must be of type sqlalchemy.URL. Got type: ({type(self.db_uri)})"
+#         )
+
+#         try:
+#             engine: sa.Engine = sa.create_engine(
+#                 url=self.get_db_uri().render_as_string(hide_password=False),
+#                 echo=self.echo,
+#             )
+
+#             return engine
+#         except Exception as exc:
+#             msg = Exception(
+#                 f"Unhandled exception getting database engine. Details: {exc}"
+#             )
+
+#             raise msg
+
+#     def get_session_pool(self) -> so.sessionmaker[so.Session]:
+#         engine: sa.Engine = self.get_engine()
+#         assert engine is not None, ValueError("engine cannot be None")
+#         assert isinstance(engine, sa.Engine), TypeError(
+#             f"engine must be of type sqlalchemy.Engine. Got type: ({type(engine)})"
+#         )
+
+#         session_pool: so.sessionmaker[so.Session] = so.sessionmaker(bind=engine)
+
+#         return session_pool
 
 
 settings: AppSettings = AppSettings()
