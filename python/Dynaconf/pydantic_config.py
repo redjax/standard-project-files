@@ -12,11 +12,12 @@ DYNACONF_SETTINGS: Dynaconf = Dynaconf(
     settings_files=["settings.toml", ".secrets.toml"],
 )
 
-DYNACONF_DB_SETTINGS: Dynaconf = Dynaconf(
-    environments=True,
-    envvar_prefix="DB",
-    settings_files=["settings.toml", ".secrets.toml"],
-)
+## Uncomment to load database settings from environment
+# DYNACONF_DB_SETTINGS: Dynaconf = Dynaconf(
+#     environments=True,
+#     envvar_prefix="DB",
+#     settings_files=["settings.toml", ".secrets.toml"],
+# )
 
 
 class AppSettings(BaseSettings):
@@ -27,33 +28,35 @@ class AppSettings(BaseSettings):
     log_level: str = Field(default=DYNACONF_SETTINGS.LOG_LEVEL, env="LOG_LEVEL")
 
 
-class DBSettings(BaseSettings):
-    drivername: str = Field(
-        default=DYNACONF_DB_SETTINGS.DB_DRIVERNAME, env="DB_DRIVERNAME"
-    )
-    username: str | None = Field(
-        default=DYNACONF_DB_SETTINGS.DB_USERNAME, env="DB_USERNAME"
-    )
-    password: str | None = Field(
-        default=DYNACONF_DB_SETTINGS.DB_PASSWORD, env="DB_PASSWORD", repr=False
-    )
-    host: str | None = Field(default=DYNACONF_DB_SETTINGS.DB_HOST, env="DB_HOST")
-    port: Union[str, int, None] = Field(
-        default=DYNACONF_DB_SETTINGS.DB_PORT, env="DB_PORT"
-    )
-    database: str = Field(default=DYNACONF_DB_SETTINGS.DB_DATABASE, env="DB_DATABASE")
+## Uncomment if you're configuring a database for the app
+# class DBSettings(BaseSettings):
+#     drivername: str = Field(
+#         default=DYNACONF_DB_SETTINGS.DB_DRIVERNAME, env="DB_DRIVERNAME"
+#     )
+#     username: str | None = Field(
+#         default=DYNACONF_DB_SETTINGS.DB_USERNAME, env="DB_USERNAME"
+#     )
+#     password: str | None = Field(
+#         default=DYNACONF_DB_SETTINGS.DB_PASSWORD, env="DB_PASSWORD", repr=False
+#     )
+#     host: str | None = Field(default=DYNACONF_DB_SETTINGS.DB_HOST, env="DB_HOST")
+#     port: Union[str, int, None] = Field(
+#         default=DYNACONF_DB_SETTINGS.DB_PORT, env="DB_PORT"
+#     )
+#     database: str = Field(default=DYNACONF_DB_SETTINGS.DB_DATABASE, env="DB_DATABASE")
 
-    @field_validator("port")
-    def validate_db_port(cls, v) -> int:
-        if v is None or v == "":
-            return None
-        elif isinstance(v, int):
-            return v
-        elif isinstance(v, str):
-            return int(v)
-        else:
-            raise ValidationError
+#     @field_validator("port")
+#     def validate_db_port(cls, v) -> int:
+#         if v is None or v == "":
+#             return None
+#         elif isinstance(v, int):
+#             return v
+#         elif isinstance(v, str):
+#             return int(v)
+#         else:
+#             raise ValidationError
 
 
 settings: AppSettings = AppSettings()
-db_settings: DBSettings = DBSettings()
+## Uncomment if you're configuring a database for the app
+# db_settings: DBSettings = DBSettings()
