@@ -12,6 +12,9 @@ DYNACONF_SETTINGS: Dynaconf = Dynaconf(
     settings_files=["settings.toml", ".secrets.toml"],
 )
 
+## Uncomment if adding a database config
+# valid_db_types: list[str] = ["sqlite", "postgres", "mssql"]
+
 ## Uncomment to load database settings from environment
 # DYNACONF_DB_SETTINGS: Dynaconf = Dynaconf(
 #     environments=True,
