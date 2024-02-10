@@ -33,7 +33,7 @@ class AppSettings(BaseSettings):
 #     drivername: str = Field(
 #         default=DYNACONF_DB_SETTINGS.DB_DRIVERNAME, env="DB_DRIVERNAME"
 #     )
-#     username: str | None = Field(
+#     user: str | None = Field(
 #         default=DYNACONF_DB_SETTINGS.DB_USERNAME, env="DB_USERNAME"
 #     )
 #     password: str | None = Field(
