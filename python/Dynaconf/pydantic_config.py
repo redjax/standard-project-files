@@ -51,6 +51,7 @@ class AppSettings(BaseSettings):
 #         default=DYNACONF_DB_SETTINGS.DB_PORT, env="DB_PORT"
 #     )
 #     database: str = Field(default=DYNACONF_DB_SETTINGS.DB_DATABASE, env="DB_DATABASE")
+#     echo: bool = Field(default=DYNACONF_DB_SETTINGS.DB_ECHO, env="DB_ECHO")
 
 #     @field_validator("port")
 #     def validate_db_port(cls, v) -> int:
