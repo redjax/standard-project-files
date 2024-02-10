@@ -22,7 +22,7 @@ log_level = "INFO"
 # db_password = ""
 # db_host = ""
 # db_port = ""
-# db_database = ".data/medcab.sqlite"
+# db_database = ".data/app.sqlite"
 # db_echo = false
 
 [dev]
@@ -41,7 +41,7 @@ log_level = "DEBUG"
 # db_password = ""
 # db_host = ""
 # db_port = ""
-# db_database = ".data/medcab-dev.sqlite"
+# db_database = ".data/app-dev.sqlite"
 # db_echo = true
 
 [prod]
@@ -57,5 +57,5 @@ log_level = "DEBUG"
 # db_password = ""
 # db_host = ""
 # db_port = ""
-# db_database = ".data/medcab.sqlite"
+# db_database = ".data/app.sqlite"
 # db_echo = false

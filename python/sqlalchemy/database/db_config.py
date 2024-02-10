@@ -13,7 +13,7 @@ class DBSettings:
     password: str | None = field(default=None)
     host: str | None = field(default=None)
     port: str | None = field(default=None)
-    database: str = field(default="filescan.sqlite")
+    database: str = field(default="app.sqlite")
     echo: bool = field(default=False)
 
     def __post_init__(self):
