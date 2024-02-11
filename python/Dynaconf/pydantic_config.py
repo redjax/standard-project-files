@@ -37,6 +37,7 @@ class AppSettings(BaseSettings):
 
 ## Uncomment if you're configuring a database for the app
 # class DBSettings(BaseSettings):
+#     type: str = Field(default=DYNACONF_SETTINGS.DB_TYPE, env="DB_TYPE")
 #     drivername: str = Field(
 #         default=DYNACONF_DB_SETTINGS.DB_DRIVERNAME, env="DB_DRIVERNAME"
 #     )
