@@ -1,0 +1,119 @@
+## Note: This assumes you're using mkdocs-material (https://squidfunk.github.io/mkdocs-material/)
+site_name: <Your docs site name>
+site_description: Default mkdocs site description
+site_url: https://github.com/user/repo
+
+## For git link in top right
+repo_name: user/repo
+repo_url: https://github.com/repo/url
+
+## Set directories to ignore when building
+exclude_docs: |
+  drafts/
+
+## Enable "friendly" URLs
+use_directory_urls: true
+
+theme:
+  name: material
+  highlightjs: true
+  icon:
+    ## Add custom icons
+    repo: fontawesome/brands/git
+  font:
+    text: Open Sans
+
+  palette:
+
+    ## Light palette (auto-select if user's browser/system theme is light)
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: black
+      accent: amber
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+
+    ## Dark palette (auto-select if user's browser/system theme is dark)
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+      primary: black
+      accent: amber
+
+  features:
+    ## Enable site search
+    - search
+    ## Add share link to search results
+    - search.share
+    ## Enable search suggestions
+    - search.suggest
+    ## Highlight search terms in fuzzy search
+    - search.highlight
+    ## 
+    - content.tabs.link
+    ## Enable tabbed navigation (top nav)
+    - navigation.tabs
+    ## Always show navigation  tabs
+    # - navigation.tabs.sticky
+    ## Enable navigation sections on page (group right-nav items)
+    - navigation.sections
+    ## Automatically expand left-nav items
+    - navigation.expand
+    ## Render navigation path breadcrumbs at top of page
+    - navigation.path
+    ## Automatically update URL when page anchors clicked
+    - navigation.tracking
+    ## Allow attaching documents directly to sections. Useful for overview pages (i.e. hide a "Getting Started" section). Requires a custom nav section
+    # - navigation.indexes
+    ## WARNING: You must set a site_url when using navigation.instant 
+    # - navigation.instant
+    - navigation.path
+    ## Render code annotation blocks
+    - content.code.annotate
+    ## Render a copy button on code blocks
+    - content.code.copy
+    - content.code.select
+    ## Render "to top" button
+    - navigation.top
+    ## Scroll nav as sections are scrolled
+    - toc.follow
+
+plugins:
+  ## Add site search
+  - search
+  ## Enable automatic nav generation from document structure
+  - literate-nav:
+      nav_file: SUMMARY.md
+  - section-index
+  ## For better image support
+  - glightbox
+  - tags:
+      ## This file must exist!
+      tags_file: tags.md
+
+## Add features to markdown text blocks
+markdown_extensions:
+  - admonition
+  - markdown_include.include:
+      base_path: .
+  ## Highlight code syntax
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  ## Improved ```blocks
+  - pymdownx.superfences
+  ## Set syntax highlighting config
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      use_pygments: true
+      pygments_lang_class: true
+  ## Enable markdown checklists, - [ ]/- [x]
+  - def_list
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  ## Handle images
+  - attr_list
+  - md_in_html
